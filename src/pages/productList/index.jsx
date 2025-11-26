@@ -3,9 +3,10 @@ import { ShoppingCartContext } from "../../context";
 import ProductTile from "../../components/productTile";
 
 
+
  function ProductListPage(){
 
-	const {listOfProducts, loading,openCart}=useContext(ShoppingCartContext);
+	const {listOfProducts, loading,openCart,cartitems}=useContext(ShoppingCartContext);
 
 	if(loading) return <h1>Loading data! please wait</h1>
 
@@ -17,7 +18,7 @@ import ProductTile from "../../components/productTile";
 				<div onClick={()=>{openCart()}} className="absolute top-0 right-0 text-white cursor-pointer flex items-center group ">
   				<i className="text-2xl mr-2 hover:scale-125">🛒</i>
   				<span className="bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-full absolute -top-2 -right-2">
-    			1
+    			{cartitems.length||0}
   				</span>
 				</div>
 
