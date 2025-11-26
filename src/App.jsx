@@ -1,6 +1,5 @@
 
 import { Fragment } from 'react';
-import './App.css';
 import { Routes , Route } from 'react-router-dom';
 import ProductDetailsPage from './pages/productDetails';
 import ProductListPage from './pages/productList';

@@ -29,7 +29,7 @@ function ProductTile({singleProductTile}) {
 			</div>
 			<button  onClick={()=>handleNavigateToProductDetailsPage(singleProductTile?.id)}  className="px-5 mt-5 w-full py-2 rounded-none bg-black text-white font-bold text-lg">view Details</button>
 
-			<button disabled={ cartitems.findIndex(item=>item.id=== singleProductTile?.id
+			<button disabled={ cartitems?.findIndex(item=>item.id=== singleProductTile?.id
 
 			)> -1} onClick={()=>handleAddToCart(singleProductTile)} className="disabled:opacity-65 px-5 mt-5 w-full py-2 rounded-none bg-black text-white font-bold text-lg">Add to Cart</button>
 		</div>

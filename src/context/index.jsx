@@ -1,7 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const ShoppingCartContext = createContext(null);
+export const ShoppingCartContext = createContext({
+  cartitems: [],
+  setCartItems: () => {},
+});
 
 function ShoppingCartProvider({children}){
 
@@ -10,6 +13,7 @@ function ShoppingCartProvider({children}){
 	const [productDetails,setProductDetails]=useState(null);
 	const [cartitems,setCartItems]=useState([]);
 	const navigate=useNavigate();
+
 
 	function openCart(){
 		navigate('/cart-list');
@@ -55,7 +59,7 @@ function ShoppingCartProvider({children}){
 		console.log(cpyExistingCartItems,'item');
 		setCartItems(cpyExistingCartItems);
 		localStorage.setItem('cartItems',JSON.stringify(cpyExistingCartItems));
-		navigate("/cart-list");
+		// navigate("/cart-list");
 	}
 
 	function handleRemoveFromCart(getProductDetails,isFullyRemoveFromCart){
@@ -80,7 +84,8 @@ function ShoppingCartProvider({children}){
 
 	useEffect(()=>{
 		fetchListOfProducts();
-		setCartItems(JSON.parse(localStorage.getItem('cartItems')));
+		setCartItems(JSON.parse(localStorage.getItem('cartItems')) || []);
+
 	}
 	,[])
 

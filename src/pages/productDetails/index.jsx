@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ShoppingCartContext } from "../../context";
 
 
@@ -25,13 +25,10 @@ function ProductDetailsPage(){
 	},
 	[id])
 
-	console.log(productDetails);
-
-	
-
 	if(loading) return <h1>Product details loading please wait</h1>
 
 	return <div>
+		<button><Link to='/products'> Home</Link></button>
 		<div className="p-6 lg:max-w-7x1 max-w-4xl mx-auto">
 			<div className="grid items-center grid-cols-1 lg:grid-cols-5 shadow-lg p-6">
 				<div className="

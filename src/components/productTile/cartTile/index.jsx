@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { Fragment } from "react";
 import { ShoppingCartContext } from "../../../context";
 
 
@@ -8,7 +7,7 @@ function CartTile({singleCartItem}) {
 
 	const {handleRemoveFromCart,handleAddToCart}=useContext(ShoppingCartContext);
 
-	return ( <Fragment>
+	return ( <>
 		<div className="grid grid-cols-3 items-start gagp-5">
 		<div className="col-span-2 flex items-start gagp-4">
 			<div className="w-28 h-28 max-sm:w-20 shrink-0 bg-gray-400 p-1 rounded-sm">
@@ -35,7 +34,7 @@ function CartTile({singleCartItem}) {
 		
 	</div>
 	<hr />
-	</Fragment>
+	</>
 	);
 }
 

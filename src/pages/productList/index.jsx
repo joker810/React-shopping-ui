@@ -25,7 +25,7 @@ import ProductTile from "../../components/productTile";
 			</div>
 			<div className="grid grid-cols-2 gap-5 mt-10 lg:mt-16 lg:gap-8 lg:grid-cols-4">
 				{
-					listOfProducts && listOfProducts.length > 0 ? listOfProducts.map((singleProductTile)=><ProductTile singleProductTile={singleProductTile}/>) : <h3>no products </h3>
+					listOfProducts && listOfProducts.length > 0 ? listOfProducts?.map((singleProductTile)=><ProductTile singleProductTile={singleProductTile} key={singleProductTile.id}/>) : <h3>no products </h3>
 				}
 
 			</div>
