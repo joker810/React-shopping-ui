@@ -5,11 +5,13 @@ import ProductDetailsPage from './pages/productDetails';
 import ProductListPage from './pages/productList';
 import CartListPage from './pages/cartList';
 
+
 function App() {
 
   return (
     <Fragment>
       <Routes>
+        <Route path="/" element={<ProductListPage />} />
         <Route path="/product-details/:id" element={<ProductDetailsPage/>} />
         <Route path="/products" element={<ProductListPage/>} />
         <Route path="/cart-list" element={<CartListPage/>}/>
