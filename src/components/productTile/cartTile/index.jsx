@@ -1,11 +1,11 @@
-import { useContext } from "react";
-import { ShoppingCartContext } from "../../../context";
 
+import { handleAddToCart,handleRemoveFromCart } from "../../../redux/slices/productsSlice";
+import { useDispatch } from "react-redux";
 
 
 function CartTile({singleCartItem}) {
 
-	const {handleRemoveFromCart,handleAddToCart}=useContext(ShoppingCartContext);
+	const dispatch = useDispatch()
 
 	return ( <>
 		<div className="grid grid-cols-3 items-start gagp-5">
@@ -17,7 +17,7 @@ function CartTile({singleCartItem}) {
 			<div>
 				<h3 className="text-base font-bold
 				 text-white-900">{singleCartItem?.title}</h3>
-				 <button onClick={()=>{handleRemoveFromCart(singleCartItem,true)}} className="text-sm px-4 py-2 bg-black text-white font-extrabold ">Remove</button>
+				 <button onClick={()=>{dispatch(handleRemoveFromCart({getProductDetails:singleCartItem,isFullyRemoveFromCart:true}))}} className="text-sm px-4 py-2 bg-black text-white font-extrabold ">Remove</button>
 			</div>
 		</div>
 		<div className="ml-auto ">
@@ -25,10 +25,10 @@ function CartTile({singleCartItem}) {
 		<p className="mt-2 mb-3 font-bold text-[16px]">Quantity:{singleCartItem?.quantity}</p>
 		<div className="mt-3">
 			<button onClick={()=>{
-				handleAddToCart(singleCartItem);
+				dispatch(handleAddToCart(singleCartItem));
 			}} className="border border-white">+</button>
 
-			<button onClick={()=>{handleRemoveFromCart(singleCartItem,false)}} className="disabled:opacity-65 border border-white" disabled={singleCartItem?.quantity === 1}>-</button>
+			<button onClick={()=>{dispatch(handleRemoveFromCart({getProductDetails:singleCartItem,isFullyRemoveFromCart:false}))}} className="disabled:opacity-65 border border-white" disabled={singleCartItem?.quantity === 1}>-</button>
 		</div>
 		</div>
 		

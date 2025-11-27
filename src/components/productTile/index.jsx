@@ -1,15 +1,16 @@
-import { useContext } from "react";
+
 import {useNavigate} from "react-router-dom" 
-import { ShoppingCartContext } from "../../context";
+import { useSelector, useDispatch } from "react-redux";
+import { handleAddToCart } from "../../redux/slices/productsSlice";
 
 function ProductTile({singleProductTile}) {
 
+	const dispatch = useDispatch();
+	const {cartItems}=useSelector(state=>state.products)
 	//button click navigate to specified url using id.
 	const navigate = useNavigate();
-	const {handleAddToCart,cartitems}=useContext(ShoppingCartContext);
 
 	function handleNavigateToProductDetailsPage(getCurrentProductId){
-		console.log(getCurrentProductId,navigate);
 		navigate(`/product-details/${getCurrentProductId}`)
 	}
 
@@ -29,9 +30,9 @@ function ProductTile({singleProductTile}) {
 			</div>
 			<button  onClick={()=>handleNavigateToProductDetailsPage(singleProductTile?.id)}  className="px-5 mt-5 w-full py-2 rounded-none bg-black text-white font-bold text-lg">view Details</button>
 
-			<button disabled={ cartitems?.findIndex(item=>item.id=== singleProductTile?.id
+			<button disabled={ cartItems?.findIndex(item=>item.id=== singleProductTile?.id
 
-			)> -1} onClick={()=>handleAddToCart(singleProductTile)} className="disabled:opacity-65 px-5 mt-5 w-full py-2 rounded-none bg-black text-white font-bold text-lg">Add to Cart</button>
+			)> -1} onClick={()=>dispatch(handleAddToCart(singleProductTile))} className="disabled:opacity-65 px-5 mt-5 w-full py-2 rounded-none bg-black text-white font-bold text-lg">Add to Cart</button>
 		</div>
 	);
 }
