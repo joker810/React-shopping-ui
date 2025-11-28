@@ -1,20 +1,32 @@
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { fetchProducts } from "../../redux/slices/productsSlice";
 import ProductTile from "../../components/productTile";
-import { Link } from "react-router-dom";
-
+import Pagination from "../pagination";
 
  function ProductListPage(){
 
 	const dispatch= useDispatch();
-	const {listOfProducts,loading,cartItems,error}=useSelector(state=>state.products);
+	const {loading,cartItems,error,totalNumberOfPages,listOfProducts,currentPage}=useSelector(state=>state.products);
+
+	const safeTotalPages = Number.isFinite(totalNumberOfPages) && totalNumberOfPages > 0
+  		? totalNumberOfPages
+  		: 0;
+
+	const arrayOfPages =
+  safeTotalPages > 0
+    ? Array.from({ length: safeTotalPages }, (_, i) => i + 1)
+    : [];
+
 
 	useEffect(()=>{
+		dispatch(fetchProducts(currentPage))
+	},[dispatch,currentPage])
 
-		setTimeout(()=>dispatch(fetchProducts()),1000)
-	},[dispatch])
+	console.log(currentPage,totalNumberOfPages);
+	// console.log(listOfProducts);
+	
 
 
 	if(loading) return <h1>Loading data! please wait</h1>
@@ -40,8 +52,10 @@ import { Link } from "react-router-dom";
 				{
 					listOfProducts && listOfProducts.length > 0 ? listOfProducts?.map((singleProductTile)=><ProductTile singleProductTile={singleProductTile} key={singleProductTile.id}/>) : <h3>no products </h3>
 				}
+				
 
 			</div>
+			{arrayOfPages && listOfProducts?.length>0 && <Pagination Pages={arrayOfPages}/ >}
 		</div>
 	</section>;
 };

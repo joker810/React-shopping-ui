@@ -1,8 +1,7 @@
 import {  useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-
-import { fetchProductDetails } from "../../redux/slices/productsSlice";
 import { useDispatch , useSelector} from "react-redux";
+import { fetchProductDetails } from "../../redux/slices/productsSlice";
 import { handleAddToCart } from "../../redux/slices/productsSlice";
 
 
@@ -12,11 +11,14 @@ function ProductDetailsPage(){
 	const dispatch=useDispatch();
 	const {productDetails,loading,cartItems}=useSelector(state=>state.products);
 
-
 	useEffect(()=>{
 		dispatch(fetchProductDetails(id))
 	},
 	[id])
+
+	function addToCart(){
+		dispatch(handleAddToCart(productDetails))
+	}
 
 	if(loading) return <h1>Product details loading please wait</h1>
 
@@ -48,7 +50,7 @@ function ProductDetailsPage(){
 							?.price}$</p>
 					</div>
 					<div>
-						<button disabled={productDetails ? cartItems.findIndex(item=>item.id=== productDetails.id)> -1 : false} onClick={()=>dispatch(handleAddToCart(productDetails))}  className="disabled:opacity-65 mt-5 min-w-[200px] px-4 py-3 border border-[#333] bg-transparent text-sm font-semibold run">Add to cart</button>
+						<button disabled={productDetails ? cartItems.findIndex(item=>item.id=== productDetails.id)> -1 : false} onClick={addToCart}  className="disabled:opacity-65 mt-5 min-w-[200px] px-4 py-3 border border-[#333] bg-transparent text-sm font-semibold run">Add to cart</button>
 					</div>
 				</div>
 			</div>
