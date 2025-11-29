@@ -5,6 +5,8 @@
         ├── react.svg
     └── 📁components
         └── 📁productTile
+            └── 📁AutoCompleteSearchBar
+                ├── index.jsx
             └── 📁cartTile
                 ├── index.jsx
             ├── index.jsx
@@ -13,6 +15,8 @@
     └── 📁pages
         └── 📁cartList
             ├── index.jsx
+        └── 📁pagination
+            ├── index.jsx
         └── 📁productDetails
             ├── index.jsx
         └── 📁productList
@@ -20,6 +24,7 @@
     └── 📁redux
         └── 📁slices
             ├── productsSlice.js
+        ├── localStorage.js
         ├── store.js
     ├── App.jsx
     ├── index.css
