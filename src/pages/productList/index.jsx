@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { fetchProducts } from "../../redux/slices/productsSlice";
 import ProductTile from "../../components/productTile";
 import Pagination from "../pagination";
+import AutoCompleteSearchBar from "../../components/productTile/AutoCompleteSearchBar";
 
  function ProductListPage(){
 
@@ -15,7 +16,7 @@ import Pagination from "../pagination";
   		: 0;
 
 	const arrayOfPages =
-  safeTotalPages > 0
+  safeTotalPages > 0 
     ? Array.from({ length: safeTotalPages }, (_, i) => i + 1)
     : [];
 
@@ -33,9 +34,11 @@ import Pagination from "../pagination";
 	if(error)return <h1>{error}</h1>
 
 	return <section className="py-12 bg-white sm:py-16">
-		<div className="px-4 mx-auto sm:px-6 lg:px-8">
-			<div className="relative flex justify-between max-w-md mx-auto text-center">
+		<div className="px-4 mx-auto sm:px-6 lg:px-8 ">
+			<div className="relative flex justify-between max-w-md mx-auto text-center flex-col gap-2">
 				<h2 className="text-3xl font-extralight text-gray-950 sm:text-4xl">Our featured products</h2>
+
+				<AutoCompleteSearchBar/>
 
 				<Link to='/cart-list'>
 				<div className="absolute top-0 right-0 text-white cursor-pointer flex items-center group ">
