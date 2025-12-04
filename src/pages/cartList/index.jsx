@@ -1,12 +1,17 @@
-
+import { useState } from "react";
 import { Link} from "react-router-dom";
 import { useSelector } from "react-redux";
-import CartTile from "../../components/productTile/cartTile";
+import CartTile from "../../components/cartTile";
+import Modal from "../../components/Modal";
+import CheckOutPage from "../checkoutPage";
 
  function CartListPage(){
 	const {cartItems}=useSelector(state=>state.products)
+	const [modelOpen,setModelOpen]=useState(false);
 
+	
 
+	if(modelOpen)return <Modal isOpen={modelOpen} onClose={()=>setModelOpen(false)}><CheckOutPage/></Modal>
 	return (<div className="max-w-5xl mx-auto max-md:max-w-xl py-4">
 		<h1 className="text-2xl font-bold text-white-800 text-center">My Cart-Page</h1>
 		<div className="grid md:grid-cols-3 gap-8 mt-12">
@@ -23,7 +28,9 @@ import CartTile from "../../components/productTile/cartTile";
 					<p className="flex flex-wrap gap-4 text-sm font-bold ">Total  <span>{cartItems?.reduce((acc,curr)=>acc+curr.totalPrice,0).toFixed(2)}{" "}$</span></p>
 				</ul>
 				<div className="mt-5 flex gap-2 ">
-					<button disabled={cartItems?.length ===0} className="disabled:opacity-60 text-sm px-4 py-2 bg-black text-white font-extrabold ">checkout</button>
+					<button disabled={cartItems?.length ===0} className="disabled:opacity-60 text-sm px-4 py-2 bg-black text-white font-extrabold "
+					onClick={()=>setModelOpen(true)}
+					>checkout</button>
 					<Link to='/products'>
 					<button className="text-sm px-4 py-2 bg-black text-white font-extrabold ">Continue shopping</button>
 					</Link>

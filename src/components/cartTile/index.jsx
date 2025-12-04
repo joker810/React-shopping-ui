@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { handleAddToCart,handleRemoveFromCart } from "../../../redux/slices/productsSlice";
+import { handleAddToCart,handleRemoveFromCart } from "../../redux/slices/productsSlice";
 
 function CartTile({singleCartItem}) {
 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { fetchProducts } from "../../redux/slices/productsSlice";
 import ProductTile from "../../components/productTile";
 import Pagination from "../pagination";
-import AutoCompleteSearchBar from "../../components/productTile/AutoCompleteSearchBar";
+import AutoCompleteSearchBar from "../../components/AutoCompleteSearchBar";
 
  function ProductListPage(){
 
