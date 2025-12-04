@@ -3,7 +3,7 @@ import { Link} from "react-router-dom";
 import { useSelector } from "react-redux";
 import CartTile from "../../components/cartTile";
 import Modal from "../../components/Modal";
-import CheckOutPage from "../checkoutPage";
+import CheckOutPage from "../checkOutPage";
 
  function CartListPage(){
 	const {cartItems}=useSelector(state=>state.products)
