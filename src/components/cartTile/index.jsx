@@ -32,9 +32,9 @@ function CartTile({singleCartItem}) {
 		<h3 className="text-lg font-bold text-white-900">{singleCartItem?.totalPrice.toFixed()}$</h3>
 		<p className="mt-2 mb-3 font-bold text-[16px]">Quantity:{singleCartItem?.quantity}</p>
 		<div className="mt-3">
-			<button onClick={addToCart} className="border border-white">+</button>
+			<button onClick={addToCart} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded border border-white">+</button>
 
-			<button onClick={()=>removeFromCart(singleCartItem,false)} className="disabled:opacity-65 border border-white" disabled={singleCartItem?.quantity === 1}>-</button>
+			<button onClick={()=>removeFromCart(singleCartItem,false)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-65 border border-white" disabled={singleCartItem?.quantity === 1}>-</button>
 		</div>
 		</div>
 		

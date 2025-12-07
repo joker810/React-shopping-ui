@@ -1,39 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {  createSlice } from "@reduxjs/toolkit";
+import { fetchProductDetails, fetchProducts } from "../thunks";
 
-
-// export const fetchProducts=createAsyncThunk('products/fetchProducts',async()=>
-// {
-//     const response=await fetch(`https://dummyjson.com/products`);
-//     const data=await response.json();
-//     return data;
-// }
-// )
-
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async (page = 1) => {
-    const limit = 30;
-    const skip = (page - 1) * limit;
-
-    const res = await fetch(`https://dummyjson.com/products?skip=${skip}&limit=${limit}`);
-    const data = await res.json();
-
-    // prevent going beyond available pages
-    if (data.products.length === 0) {
-      return { ...data, products: [], invalidPage: true };
-    }
-
-    return data;
-  }
-);
-
-
-
-export const fetchProductDetails=createAsyncThunk('products/fetchProductDetails',async(productId)=>{
-    const response = await fetch(`https://dummyjson.com/products/${productId}`);
-    const data= await response.json();
-    return data;
-})
 
 const productSlice=createSlice({
     name:'products',

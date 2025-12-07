@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { fetchProducts } from "../../redux/slices/productsSlice";
+import { fetchProducts } from "../../redux/thunks";
 import ProductTile from "../../components/productTile";
 import Pagination from "../pagination";
 import AutoCompleteSearchBar from "../../components/AutoCompleteSearchBar";
