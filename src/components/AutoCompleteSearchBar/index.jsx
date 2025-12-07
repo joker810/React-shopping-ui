@@ -1,7 +1,8 @@
-import { useState,useEffect,useRef } from "react";
+import { useState,useEffect,useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import React from 'react';
 
-const CACHE_RESULT={}
+const CACHE_RESULT={};
 
 function AutoCompleteSearchBar() {
 
@@ -9,7 +10,8 @@ function AutoCompleteSearchBar() {
     const [searchResult, setSearchResult]= useState([]);
     const [isClicked,setIsClicked] = useState(true);
     const [highlightIndex,setHighlightIndex]=useState(-1);
-    const ref=useRef(null);
+    const itemRefs=useRef([]);
+    const timeoutRef=useRef();
 
     const navigate= useNavigate();
 
@@ -18,42 +20,70 @@ function AutoCompleteSearchBar() {
         setInput(value);
     }
 
-    async function fetchSearch(){
-        try{
-            if (CACHE_RESULT[input]) {
-            setSearchResult(CACHE_RESULT[input]);
+    const fetchSearch = useCallback(async()=>{
+        const trimmedInput = input.trim();
+        
+        if (!trimmedInput) {
+            setSearchResult([]);
             return;
-            }       
-            const response = await fetch(`https://dummyjson.com/products/search?q=${input}`);
+        }
+
+        try {
+            if (CACHE_RESULT[trimmedInput]) {
+                setSearchResult(CACHE_RESULT[trimmedInput]);
+                return;
+            }
+            
+            const response = await fetch(`https://dummyjson.com/products/search?q=${trimmedInput}`);
             const data = await response.json();
-            CACHE_RESULT[input]=data.products;
-            setSearchResult(data.products)
+            const slicedResult = data.products.slice(0, 10);
+            
+            CACHE_RESULT[trimmedInput] = slicedResult;
+            setSearchResult(slicedResult);
+        } catch(err) {
+            console.log(err);
+            setSearchResult([]);
         }
-        catch(err){
-            console.log(err)
-        }
-    }
+    }, [input])
 
     function handleNavigate(id){
         navigate(`/product-details/${id}`)
     }
 
     useEffect(()=>{
+
+        if(timeoutRef.current){
+            clearTimeout(timeoutRef.current);
+        }
         if (input.trim() === "") { 
                 return;  //dont make api call on empty input..
             }
-        let timer;
-        setTimeout(()=>{
-            
-            timer=fetchSearch()
+        
+        timeoutRef.current=setTimeout(()=>{
+            fetchSearch()
         },500)
-        return ()=>clearTimeout(timer);
-    },[input])
+        return ()=>{
+            if(timeoutRef.current){
+            clearTimeout(timeoutRef.current);
+        }
+    }
+    },[input,fetchSearch])
+
+    useEffect(() => {
+  if (highlightIndex !== -1 && itemRefs.current[highlightIndex]) {
+    itemRefs.current[highlightIndex].scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
+  }
+}, [highlightIndex]);
+
 
     console.log(searchResult)
 
     function handleTargetHighlight(event){
         if(event.key==="ArrowDown"){
+            event.preventDefault();
             setHighlightIndex((prev)=>prev<searchResult.length-1 ? prev+1 : 0 );
         }
         if(event.key==="ArrowUp"){
@@ -85,7 +115,6 @@ function AutoCompleteSearchBar() {
             "
             onChange={(event)=>handleChange(event)}
             value={input}
-            ref={ref}
             onFocus={()=>setIsClicked(true)}
             onBlur={()=>setIsClicked(false)}
             onKeyDown={(event)=>handleTargetHighlight(event)}
@@ -108,9 +137,10 @@ function AutoCompleteSearchBar() {
         "
         >
             {isClicked &&
-            searchResult.slice(0, 10).map((res, index) => (
+            searchResult.map((res, index) => (
                 <p
                 key={res.id}
+                ref={el=>itemRefs.current[index]=el}
                 onMouseEnter={() => setHighlightIndex(index)}
                 onMouseDown={() => handleNavigate(res.id)}
                 className={`text-black px-3 py-2 cursor-pointer 

@@ -19,7 +19,7 @@ React Shopping UI is a frontend application built with React for simulating an o
 - Other: LocalStorage for persistence
 
 ### Components
-- AutoCompleteSearchBar: A search input that suggests products as you type.     Uses debounced input for performance.
+- AutoCompleteSearchBar: A search input that suggests products as you type.     Uses debounced input for performance. Used refs for scrollsIntoView (highlight target on event like key up/down) .
 - CartTile: Renders a single cart item with quantity controls and remove option.
 - Modal: Reusable overlay for confirmations (e.g., delete item).
 - OrderSummary: Displays cart totals, taxes, and subtotal.(removes items for better ux pending ).
@@ -40,6 +40,7 @@ Each component is exported via index.jsx for easy imports.
 ### State Management
 - Redux Toolkit: Central store in store.js. Products managed in productsSlice.js (reducers for fetch/add/remove).
 - LocalStorage: Persistence via localStorage.js (e.g., save cart on changes).Also form data on rememberMe.
+- thunks has exponentialbackoffs , abortControllers.
 - Context API: context/index.jsx for lighter global state (e.g., theme or user prefs).Furthur update
 
 # Dependency for redux setup
@@ -63,6 +64,8 @@ Each component is exported via index.jsx for easy imports.
             ├── index.jsx
     └── 📁context
         ├── index.jsx
+    └── 📁customhook
+        ├── index.js
     └── 📁pages
         └── 📁cartList
             ├── index.jsx
@@ -77,6 +80,8 @@ Each component is exported via index.jsx for easy imports.
     └── 📁redux
         └── 📁slices
             ├── productsSlice.js
+        └── 📁thunks
+            ├── index.js
         ├── localStorage.js
         ├── store.js
     ├── App.jsx
